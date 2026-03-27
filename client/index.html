@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Магазин стройматериалов</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>Интернет-магазин стройматериалов</h1>
+      <p>Демо-проект для ручного, API и UI тестирования</p>
+    </header>
+
+    <section class="search-section">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Поиск товара по названию..."
+      />
+    </section>
+
+    <main class="main-grid">
+      <section class="catalog-section">
+        <h2>Каталог товаров</h2>
+        <div id="productsList" class="products-grid"></div>
+      </section>
+
+      <aside class="cart-section">
+        <h2>Корзина</h2>
+        <div id="cartList" class="cart-list"></div>
+        <div class="cart-total">
+          <strong>Итог:</strong>
+          <span id="totalPrice">0 ₽</span>
+        </div>
+      </aside>
+    </main>
+
+    <section class="checkout-section">
+      <h2>Оформление заказа</h2>
+      <form id="orderForm" class="order-form">
+        <div class="form-group">
+          <label for="name">Имя</label>
+          <input type="text" id="name" name="name" placeholder="Введите имя" />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Телефон *</label>
+          <input type="text" id="phone" name="phone" placeholder="Введите телефон" />
+        </div>
+
+        <div class="form-group">
+          <label for="address">Адрес</label>
+          <input type="text" id="address" name="address" placeholder="Введите адрес" />
+        </div>
+
+        <button type="submit" class="primary-btn">Оформить заказ</button>
+      </form>
+
+      <p id="orderMessage" class="order-message"></p>
+    </section>
+  </div>
+
+  <script src="./js/script.js"></script>
+</body>
+</html>
