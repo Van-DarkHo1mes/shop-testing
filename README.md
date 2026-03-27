@@ -32,6 +32,7 @@
   - http://127.0.0.1:5500
 
 ## 🧪 Тестирование
+![CI](https://github.com/Van-DarkHo1mes/shop-testing/actions/workflows/tests.yml/badge.svg)
 ### API (Postman)
 #### Импортировать:
   - postman/ShopDemo.postman_collection.json
