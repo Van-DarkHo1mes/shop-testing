@@ -1,55 +1,49 @@
-🏗️ Shop Testing Demo
+# 🏗️ Shop Testing Demo
 
 Демонстрационный проект интернет-магазина стройматериалов для тестирования.
 
-📌 Цель проекта
+## 📌 Цель проекта
 Показать навыки:
 - ручного тестирования
 - API тестирования (Postman)
 - UI автотестирования (Selenium)
 
-⚙️ Функционал
+## ⚙️ Функционал
 - каталог товаров
 - поиск
 - корзина
 - оформление заказа
 - валидация телефона
   
-🛠️ Технологии
+## 🛠️ Технологии
 - Frontend: HTML, CSS, JavaScript
 - Backend: Node.js, Express
 - API тесты: Postman
 - UI тесты: Selenium + Python + pytest
   
-🚀 Запуск проекта
-Backend
+## 🚀 Запуск проекта
+### Backend
   - cd server
   - node server.js
-Frontend
+### Frontend
   - cd client
   - python -m http.server 5500
-Открыть:
+### Открыть:
   - http://127.0.0.1:5500
 
-🧪 Тестирование
-API (Postman)
-Импортировать:
+## 🧪 Тестирование
+### API (Postman)
+#### Импортировать:
   - postman/ShopDemo.postman_collection.json
-Проверяются:
+#### Проверяются:
   - статус-коды
   - структура ответа
   - ошибки
-UI (Selenium)
+### UI (Selenium)
   - pytest tests-ui -v
-Покрытие:
+#### Покрытие:
   - поиск товара
   - добавление в корзину
   - изменение количества
   - ошибка при пустом телефоне
   - успешное оформление заказа
-📂 Структура проекта
-  client/
-  server/
-  tests-ui/
-  postman/
-  docs/
