@@ -1,0 +1,103 @@
+name: CI Tests
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install backend dependencies
+        run: npm install
+        working-directory: ./server
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest selenium requests
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Install Google Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Start backend
+        run: |
+          node server.js > backend.log 2>&1 &
+          echo $! > backend.pid
+        working-directory: ./server
+
+      - name: Start frontend
+        run: |
+          python -m http.server 5500 > frontend.log 2>&1 &
+          echo $! > frontend.pid
+        working-directory: ./client
+
+      - name: Wait for backend
+        run: |
+          for i in {1..20}; do
+            if curl -s http://127.0.0.1:3000/api/products > /dev/null; then
+              echo "Backend is up"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Backend did not start in time"
+          exit 1
+
+      - name: Wait for frontend
+        run: |
+          for i in {1..20}; do
+            if curl -s http://127.0.0.1:5500 > /dev/null; then
+              echo "Frontend is up"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Frontend did not start in time"
+          exit 1
+
+      - name: Run Postman collection with Newman
+        run: newman run postman/ShopDemo.postman_collection.json
+
+      - name: Run Selenium UI tests
+        env:
+          CHROME_BIN: /opt/hostedtoolcache/setup-chrome/chromium/stable/x64/chrome
+        run: pytest tests-ui -v
+
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-logs
+          path: |
+            server/backend.log
+            client/frontend.log
+
+      - name: Stop background services
+        if: always()
+        run: |
+          if [ -f server/backend.pid ]; then kill $(cat server/backend.pid) || true; fi
+          if [ -f client/frontend.pid ]; then kill $(cat client/frontend.pid) || true; fi
