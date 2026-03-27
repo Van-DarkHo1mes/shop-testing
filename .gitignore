@@ -29,8 +29,10 @@ coverage/
 
 # =========================
 
-**pycache**/
-*.py[cod]
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 *$py.class
 
 # pytest
