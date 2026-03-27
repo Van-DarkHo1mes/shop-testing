@@ -103,6 +103,12 @@ app.post('/api/order', (req, res) => {
   res.json({ message: 'Заказ оформлен', order });
 });
 
+// Перезапуск для теста
+app.post('/api/test/reset', (req, res) => {
+  cart = [];
+  orders = [];
+  res.json({ message: 'State reset' });
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
